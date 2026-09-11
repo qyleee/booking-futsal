@@ -64,12 +64,18 @@ class BookingResource extends Resource
      */
     public static function canEdit($record): bool
     {
-        if (! auth()->check() || in_array($record->status, ['dikonfirmasi', 'selesai', 'dibatalkan'], true)) {
+        if (! auth()->check()) {
             return false;
         }
 
-        return auth()->user()?->role === 'admin'
-            || $record->user_id === auth()->id();
+        // Admin tidak bisa edit booking, hanya bisa lihat
+        if (auth()->user()?->role === 'admin') {
+            return false;
+        }
+
+        // User hanya bisa edit jika status menunggu dan itu booking miliknya
+        return $record->user_id === auth()->id()
+            && $record->status === 'menunggu';
     }
 
     /**

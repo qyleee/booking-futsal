@@ -77,14 +77,9 @@ class BookingsTable
             ->recordActions([
     EditAction::make()
         ->visible(fn ($record): bool =>
-            (
-                auth()->user()?->role === 'admin'
-                && ! in_array($record->status, ['dikonfirmasi', 'selesai', 'dibatalkan'], true)
-            ) ||
-            (
-                $record->user_id === auth()->id() &&
-                $record->status === 'menunggu'
-            )
+            auth()->user()?->role !== 'admin' &&
+            $record->user_id === auth()->id() &&
+            $record->status === 'menunggu'
         ),
        ])
             ->toolbarActions(

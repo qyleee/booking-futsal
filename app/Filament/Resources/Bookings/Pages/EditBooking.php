@@ -26,6 +26,21 @@ class EditBooking extends EditRecord
     /** Menyimpan data transaksi sementara sebelum diupdate. */
     protected array $transaksiData = [];
 
+    public function mount(int|string $record): void
+    {
+        parent::mount($record);
+
+        // Admin tidak boleh mengakses halaman edit
+        if (auth()->user()?->role === 'admin') {
+            abort(403, 'Anda tidak memiliki akses untuk mengedit booking.');
+        }
+
+        // User hanya bisa edit booking miliknya sendiri dengan status menunggu
+        if ($this->record->user_id !== auth()->id() || $this->record->status !== 'menunggu') {
+            abort(403, 'Anda tidak memiliki akses untuk mengedit booking ini.');
+        }
+    }
+
     /**
      * Mengisi data form dengan data transaksi yang sudah ada saat edit.
      * Mengambil metode pembayaran dan bukti pembayaran dari relasi transaksi.
