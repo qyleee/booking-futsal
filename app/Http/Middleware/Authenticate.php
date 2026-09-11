@@ -3,8 +3,6 @@
 namespace App\Http\Middleware;
 
 use Filament\Http\Middleware\Authenticate as FilamentAuthenticate;
-use Illuminate\Http\Request;
-use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Authenticate - Middleware custom untuk redirect halaman login Filament.
@@ -14,12 +12,12 @@ class Authenticate extends FilamentAuthenticate
 {
     /**
      * Mendapatkan URL redirect untuk user yang belum login.
-     * Mengarahkan ke /login (halaman login custom, bukan /user/login atau /admin/login).
+     * Mengarahkan ke /login (halaman login custom).
      *
-     * @param Request $request Request HTTP.
+     * @param mixed $request Request HTTP.
      * @return string URL redirect.
      */
-    protected function redirectTo(Request $request): ?string
+    protected function redirectTo($request): ?string
     {
         return '/login';
     }

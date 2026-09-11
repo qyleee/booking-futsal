@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Http\Controllers\Controller;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Auth;
  * Halaman login diakses di `/login` (tanpa prefix panel).
  * Setelah login, redirect berdasarkan role: admin ke /admin, user ke /user.
  */
-class LoginController extends Controller
+class LoginController
 {
     /**
      * Menampilkan halaman form login.
