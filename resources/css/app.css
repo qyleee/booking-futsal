@@ -1,0 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.filament-auth-page .fi-card {
+    @apply shadow-lg border border-gray-200 dark:border-gray-700;
+}
