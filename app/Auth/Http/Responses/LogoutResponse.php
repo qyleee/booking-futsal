@@ -8,19 +8,18 @@ use Livewire\Features\SupportRedirects\Redirector;
 
 /**
  * LogoutResponse - Menangani respons redirect setelah user logout.
- * Mengimplementasikan kontrak LogoutResponse Filament.
- * Setelah logout, user akan dialihkan ke halaman login.
+ * Setelah logout, user akan dialihkan ke halaman utama (landing page).
  */
 class LogoutResponse implements Responsable
 {
     /**
-     * Mengubah response menjadi redirect ke halaman login.
+     * Mengubah response menjadi redirect ke halaman utama (landing page).
      *
      * @param mixed $request Request HTTP.
-     * @return RedirectResponse|Redirector Redirect ke /login.
+     * @return RedirectResponse|Redirector Redirect ke landing page.
      */
     public function toResponse($request): RedirectResponse | Redirector
     {
-        return redirect()->to('/login');
+        return redirect()->to('/');
     }
 }
