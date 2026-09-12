@@ -60,4 +60,28 @@ class User extends Authenticatable implements FilamentUser
 
         return false;
     }
+
+    public function getFilamentAvatarUrl(): ?string
+    {
+        $name = trim($this->name ?? '?');
+        $parts = array_filter(explode(' ', $name));
+        $initials = strtoupper(
+            mb_substr($parts[0] ?? '?', 0, 1) .
+            mb_substr(end($parts) ?? '', 0, 1)
+        );
+
+        $colors = [
+            '#10b981', '#3b82f6', '#8b5cf6', '#f59e0b',
+            '#ef4444', '#ec4899', '#06b6d4', '#84cc16',
+        ];
+        $color = $colors[crc32($this->email ?? $name) % count($colors)];
+
+        $svg = '<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128">'
+            . '<rect width="128" height="128" rx="64" fill="' . $color . '"/>'
+            . '<text x="64" y="64" font-family="Inter,system-ui,sans-serif" font-size="48" font-weight="600" fill="#ffffff" text-anchor="middle" dominant-baseline="central">'
+            . htmlspecialchars($initials)
+            . '</text></svg>';
+
+        return 'data:image/svg+xml;base64,' . base64_encode($svg);
+    }
 }
